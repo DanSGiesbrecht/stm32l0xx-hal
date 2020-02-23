@@ -37,7 +37,13 @@ use crate::time::Hertz;
 use cast::u8;
 
 #[cfg(feature = "stm32l0x1")]
-use crate::gpio::gpioa::{PA13, PA4};
+use crate::{
+    gpio::{
+        gpioa::{PA13, PA4},
+        gpiob::{PB10, PB11, PB13, PB14}
+    },
+    pac::{I2C2, I2C3},
+};
 
 #[cfg(any(feature = "stm32l0x2", feature = "stm32l0x3"))]
 use crate::{
@@ -500,6 +506,22 @@ i2c!(
         (PB6<Output<OpenDrain>>, AltMode::AF1),
         (PA9<Output<OpenDrain>>, AltMode::AF6),
         (PA4<Output<OpenDrain>>, AltMode::AF3),
+    ],
+);
+
+// stm32l071
+#[cfg(feature = "stm32l0x1")]
+i2c!(
+    I2C2,
+    i2c2en,
+    i2c2rst,
+    sda: [
+        (PB11<Output<OpenDrain>>, AltMode::AF6),
+        (PB14<Output<OpenDrain>>, AltMode::AF5),
+    ],
+    scl: [
+        (PB10<Output<OpenDrain>>, AltMode::AF6),
+        (PB13<Output<OpenDrain>>, AltMode::AF5),
     ],
 );
 
